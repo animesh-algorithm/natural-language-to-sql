@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
 import { Nunito } from "next/font/google";
-import Link from "next/link";
 import Prompt from "@/components/Prompt";
 import Query from "@/components/Query";
 import { useState } from "react";
@@ -43,6 +42,7 @@ export default function Home() {
         </p>
         <Prompt query={query} setQuery={setQuery} />
         {query.sqlQuery && <Query query={query} />}
+        <div className="h-[100px]"></div>
       </main>
     </>
   );

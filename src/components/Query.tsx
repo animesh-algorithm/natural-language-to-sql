@@ -26,6 +26,7 @@ const Query: React.FC<Props> = ({ query }) => {
   useEffect(() => {
     if (currentWordIndex < query.sqlQuery.split(" ").length) {
       // Set up the interval if it doesn't exist yet.
+      window.scrollTo(0, document.body.scrollHeight);
       if (!intervalIdRef.current) {
         intervalIdRef.current = window.setInterval(() => {
           setCurrentWordIndex((currentWordIndex) => currentWordIndex + 1);
@@ -44,7 +45,10 @@ const Query: React.FC<Props> = ({ query }) => {
   const currentWords = words.slice(0, currentWordIndex);
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full pt-5 lg:p-5">
+    <div
+      id="scroller"
+      className="flex flex-col items-center justify-center w-full h-full pt-5 lg:p-5"
+    >
       <div
         className="
         text-left
