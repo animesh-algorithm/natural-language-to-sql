@@ -33,8 +33,10 @@ const Query: React.FC<Props> = ({ query }) => {
       }
     } else {
       // Clear the interval when we reach the end of the SQL query.
-      clearInterval(intervalIdRef.current);
-      intervalIdRef.current = null;
+      if (intervalIdRef.current) {
+        clearInterval(intervalIdRef.current);
+        intervalIdRef.current = null;
+      }
     }
   }, [currentWordIndex, query.sqlQuery]);
 
