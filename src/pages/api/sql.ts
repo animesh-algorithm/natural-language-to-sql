@@ -8,7 +8,7 @@ const openai = new OpenAIApi(configuration);
 
 export default async function handler(req: any, res: any) {
   const { query } = req.body;
-  const prompt = `Translate this natural language query into SQL:\n\n"${query}"\n\nSQL Query:`;
+  const prompt = `Explain the code below:\n\n"${query}"\n\nSQL Query:`;
   try {
     const response = await openai.createCompletion({
       temperature: 0.5,

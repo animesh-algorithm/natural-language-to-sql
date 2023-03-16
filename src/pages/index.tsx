@@ -42,7 +42,7 @@ export default function Home() {
         </p>
         <Prompt query={query} setQuery={setQuery} />
         {query.sqlQuery && <Query query={query} />}
-        <div className="h-[100px]"></div>
+        <div className="h-36 md:h-[100px]"></div>
       </main>
     </>
   );

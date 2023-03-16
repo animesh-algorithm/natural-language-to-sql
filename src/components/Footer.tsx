@@ -10,13 +10,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer
-      className="flex flex-col md:flex-row items-center justify-start w-full h-36 md:h-[100px] bg-black text-white"
-      style={{
-        position: "fixed",
-        bottom: 0,
-      }}
-    >
+    <footer className="flex flex-col md:flex-row items-center justify-start w-full h-36 md:h-[100px] bg-black text-white fixed bottom-0">
       {/* Logo */}
       <div className="flex flex-row items-center justify-center w-full h-24 mt-5 md:mt-0">
         <Image src="/rain.jpeg" alt="Animesh Sharma" width="40" height="40" />
