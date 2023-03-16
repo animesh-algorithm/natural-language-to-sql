@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import SyntaxHighlighter from "react-syntax-highlighter";
-import { vs, dracula } from "react-syntax-highlighter/dist/cjs/styles/hljs";
+import { dracula } from "react-syntax-highlighter/dist/cjs/styles/hljs";
+import { HiOutlineClipboard, HiOutlineClipboardCheck } from "react-icons/hi";
 
 interface Props {
   query: {
@@ -12,6 +13,20 @@ interface Props {
 const Query: React.FC<Props> = ({ query }) => {
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
   const intervalIdRef = useRef<number | null>(null);
+  const [copied, setCopied] = useState(false);
+  const copyToClipboard = () => {
+    const el = document.createElement("textarea");
+    el.value = currentWords.join(" ");
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand("copy");
+    document.body.removeChild(el);
+    setCopied(true);
+  };
+
+  useEffect(() => {
+    setCurrentWordIndex(0);
+  }, [query.sqlQuery]);
 
   useEffect(() => {
     // Clear the interval if it exists when the component is unmounted or when the SQL query changes.
@@ -24,6 +39,7 @@ const Query: React.FC<Props> = ({ query }) => {
   }, [query.sqlQuery]);
 
   useEffect(() => {
+    setCopied(false);
     if (currentWordIndex < query.sqlQuery.split(" ").length) {
       // Set up the interval if it doesn't exist yet.
       window.scrollTo(0, document.body.scrollHeight);
@@ -50,6 +66,7 @@ const Query: React.FC<Props> = ({ query }) => {
       className="flex flex-col items-center justify-center w-full h-full pt-5 lg:p-5"
     >
       <div
+        id="query"
         className="
         text-left
         bg-black
@@ -59,6 +76,7 @@ const Query: React.FC<Props> = ({ query }) => {
         sm:w-3/4 md:w-3/4 lg:w-3/4
         p-5
         text-gray-200
+        relative
         "
       >
         <SyntaxHighlighter
@@ -77,6 +95,19 @@ const Query: React.FC<Props> = ({ query }) => {
         >
           {currentWords.join(" ")}
         </SyntaxHighlighter>
+        {/* Copy Icon */}
+        <div className="absolute top-0 right-0 p-2" onClick={copyToClipboard}>
+          {
+            // If the current word index is equal to the total number of words, then we've reached the end of the SQL query.
+            query.sqlQuery !== "Generating Query..." &&
+              currentWordIndex === words.length &&
+              (copied ? (
+                <HiOutlineClipboardCheck className="text-2xl text-green-500 cursor-pointer" />
+              ) : (
+                <HiOutlineClipboard className="text-2xl text-gray-500 cursor-pointer" />
+              ))
+          }
+        </div>
       </div>
     </div>
   );
