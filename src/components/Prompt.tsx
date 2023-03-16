@@ -9,6 +9,10 @@ interface Props {
 }
 
 const Prompt: React.FC<Props> = ({ query, setQuery }) => {
+  const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+  React.useEffect(() => {
+    if (textareaRef.current) textareaRef.current.focus();
+  }, []);
   const handleSubmit = async () => {
     setQuery({
       humanQuery: query.humanQuery,
@@ -31,14 +35,15 @@ const Prompt: React.FC<Props> = ({ query, setQuery }) => {
     <div className="flex flex-col items-center justify-center w-full h-full pt-5 lg:p-5">
       {/* Responsive textarea */}
       <textarea
+        ref={textareaRef}
         className="w-full p-2 h-40 text-xl text-gray-300 dark:text-gray-50 border rounded-lg focus:outline-none focus:ring-2 
         focus:ring-gray-600
         dark:focus:ring-gray-100
         focus:border-transparent
         sm:w-3/4 md:w-3/4 lg:w-3/4 m-4
-        bg-black
+        bg-black cursor-auto
         "
-        placeholder="Enter your query here"
+        placeholder=" Enter your query here"
         value={query?.humanQuery}
         onChange={(e) =>
           setQuery({
@@ -46,6 +51,7 @@ const Prompt: React.FC<Props> = ({ query, setQuery }) => {
             sqlQuery: query?.sqlQuery,
           })
         }
+        autoFocus
       ></textarea>
       {/* Two Button in a same row */}
       <div
